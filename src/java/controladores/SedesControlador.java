@@ -41,7 +41,7 @@ public class SedesControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
         if(request.getParameter("pagina").equals("verSedes")){
 //            response.sendRedirect("administrador/sedes/verSedes.jsp");
             ConexionMongo conexion = new ConexionMongo();
