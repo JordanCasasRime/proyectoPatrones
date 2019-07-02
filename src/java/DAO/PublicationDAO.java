@@ -11,9 +11,17 @@ import Interfaces.IPublicationDAO;
 
 public class PublicationDAO implements IPublicationDAO {
 
+    public static PublicationDAO getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private IConnection connection;
     private MongoDB mongodb;
     private DBCollection collection;
+
+    public PublicationDAO() {
+        connection();
+    }
 
     public void setConexion(IConnection conexion) {
         this.connection = conexion;
@@ -46,7 +54,7 @@ public class PublicationDAO implements IPublicationDAO {
         DBCursor publicaciones = collection.find();
         ArrayList<Publication> publicacionA = new ArrayList<Publication>();
         publicaciones.forEach((publicacion) -> {
-            publicacionA.add(new Publication((String) publicacion.get("titulo"), (String) publicacion.get("descripcion"), (String) publicacion.get("fecha"), (String) publicacion.get("categoria"), (int) publicacion.get("publicactionId")));
+            publicacionA.add(new Publication((String) publicacion.get("titulo"), (String) publicacion.get("descripcion"), (String) publicacion.get("fecha"), (String) publicacion.get("categoria"), (int) publicacion.get("publicacionId")));
         });
         return publicacionA;
     }
@@ -63,7 +71,7 @@ public class PublicationDAO implements IPublicationDAO {
 
     @Override
     public void update(Publication publicacion) {
-        collection.update(new BasicDBObject().append("publicacionId", publicacion.getPublicactionId()),
+        collection.update(new BasicDBObject().append("publicacionId", publicacion.getPublicationId()),
         new BasicDBObject("$set", new BasicDBObject("titulo", publicacion.getTitle()).append("descripcion", publicacion.getDescription()).append("fecha", publicacion.getDate()).append("categoria", publicacion.getCategoria())));
     }
 

@@ -12,19 +12,23 @@ import java.util.ArrayList;
 public class HeadquartersDAO implements IConnection, IHeadquartersDAO {
     
     private IConnection connection;
-    private MongoDB mongodb;
-    private DBCollection collection;
-
-    public HeadquartersDAO() {
-        connection();
-    }
+    private static MongoDB mongodb;
+    private static DBCollection collection;
+    private static HeadquartersDAO dao;
     
     public void setConexion(IConnection conexion) {
         this.connection = conexion;
     }
 
-    @Override
-    public void connection() {
+    public synchronized static HeadquartersDAO getInstance () {
+        if (dao == null){
+            dao = new HeadquartersDAO();
+            connection();
+        }
+        return dao;
+    }
+    
+    private static void connection() {
         mongodb = MongoDB.getInstance();
         collection = mongodb.getDatabase().getCollection("sedes");
     }
@@ -35,7 +39,8 @@ public class HeadquartersDAO implements IConnection, IHeadquartersDAO {
     }
 
     @Override
-    public void create(Headquarters headq) {
+    public void create(Headquarters headquarters) {
+        Headquarters newHeadquarters = (Headquarters) headquarters.clone();
         BasicDBObject sedeU = (BasicDBObject) collection.find().sort(new BasicDBObject("sedeId", -1)).limit(1).next();
         int idU = 1;
         if (sedeU != null) {
@@ -43,7 +48,7 @@ public class HeadquartersDAO implements IConnection, IHeadquartersDAO {
                 idU = (int) sedeU.get("sedeId") + 1;
             }
         }
-        BasicDBObject documento = new BasicDBObject("nombre", headq.getName()).append("sedeId", idU).append("direccion", headq.getAddress()).append("aforo", headq.getCapacity());
+        BasicDBObject documento = new BasicDBObject("nombre", newHeadquarters.getName()).append("sedeId", idU).append("direccion", newHeadquarters.getAddress()).append("aforo", newHeadquarters.getCapacity());
         collection.insert(documento);
     }
 
@@ -52,7 +57,8 @@ public class HeadquartersDAO implements IConnection, IHeadquartersDAO {
         DBCursor sedes = collection.find();
         ArrayList<Headquarters> sedesA = new ArrayList<Headquarters>();
         sedes.forEach((sede) -> {
-            sedesA.add(new Headquarters((String) sede.get("nombre"), (String) sede.get("direccion"), (int) sede.get("aforo"), (int) sede.get("sedeId")));
+            Headquarters h = new Headquarters((String) sede.get("nombre"), (String) sede.get("direccion"), (int) sede.get("aforo"), (int) sede.get("sedeId"));
+            sedesA.add(h);
         });
         return sedesA;
     }

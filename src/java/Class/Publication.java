@@ -1,19 +1,21 @@
 package Class;
 
-public class Publication {
+import Interfaces.IClone;
+
+public class Publication implements IClone {
 
     private String title;
     private String description;
     private String date;
     private String categoria;
-    private int publicactionId;
+    private int publicationId;
 
-    public Publication(String title, String description, String date, String categoria, int publicactionId) {
+    public Publication(String title, String description, String date, String categoria, int publicationId) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.categoria = categoria;
-        this.publicactionId = publicactionId;
+        this.publicationId = publicationId;
     }
 
     public String getTitle() {
@@ -48,12 +50,18 @@ public class Publication {
         this.categoria = categoria;
     }
 
-    public int getPublicactionId() {
-        return publicactionId;
+    public int getPublicationId() {
+        return publicationId;
     }
 
-    public void setPublicactionId(int publicactionId) {
-        this.publicactionId = publicactionId;
+    public void setPublicationId(int publicactionId) {
+        this.publicationId = publicactionId;
+    }
+    
+    @Override
+    public IClone clone() {
+        IClone publication = new Publication(this.title, this.description, this.date, this.categoria, this.publicationId);
+        return publication;
     }
     
 }

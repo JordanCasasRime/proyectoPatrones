@@ -1,7 +1,7 @@
-package controladores;
+package Servlets;
 
-import BD.ConexionMongo;
-import clases.Sedeeeee;
+import Class.Headquarters;
+import DAO.HeadquartersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class SedesControlador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ConexionMongo conexion = new ConexionMongo();
-            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
-            conexion.cerrarConexion();
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+            ArrayList<Headquarters> sedes =conexion.readAll();
+            conexion.disconnection();
             request.setAttribute("sedes",sedes);
             request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
             out.println("<!DOCTYPE html>");
@@ -44,15 +44,15 @@ public class SedesControlador extends HttpServlet {
 //        processRequest(request, response);
         if(request.getParameter("pagina").equals("verSedes")){
 //            response.sendRedirect("administrador/sedes/verSedes.jsp");
-            ConexionMongo conexion = new ConexionMongo();
-            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
-            conexion.cerrarConexion();
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+            ArrayList<Headquarters> sedes =conexion.readAll();
+            conexion.disconnection();
             request.setAttribute("sedes",sedes);
             request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
         }else if(request.getParameter("pagina").equals("editarSede")){
-            ConexionMongo conexion = new ConexionMongo();
-            Sedeeeee sede =conexion.obtenerSede(Integer.parseInt(request.getParameter("id")));
-            conexion.cerrarConexion();
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+            Headquarters sede = conexion.readID(Integer.parseInt(request.getParameter("id")));
+            conexion.disconnection();
             request.setAttribute("sede",sede);
             request.getRequestDispatcher("administrador/sedes/editarSede.jsp").forward(request, response);
         }else if(request.getParameter("pagina").equals("crearSede")){
@@ -67,33 +67,33 @@ public class SedesControlador extends HttpServlet {
             String nombre = request.getParameter("nombreSede");
             String direccion = request.getParameter("direccionSede");
             int aforo = Integer.parseInt(request.getParameter("aforoSede"));
-            ConexionMongo conexion = new ConexionMongo();
-            conexion.crearSede(nombre,direccion,aforo);
-            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
-            conexion.cerrarConexion();
-            request.setAttribute("sedes",sedes);
-            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+//            conexion.crearSede(nombre,direccion,aforo);
+//            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
+//            conexion.cerrarConexion();
+//            request.setAttribute("sedes",sedes);
+//            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
         }else if(request.getParameter("_method").equals("PUT")){
             String nombre = request.getParameter("nombreSede");
             String direccion = request.getParameter("direccionSede");
             int aforo = Integer.parseInt(request.getParameter("aforoSede"));
             int sedeId = Integer.parseInt(request.getParameter("sedeId"));
 
-            ConexionMongo conexion = new ConexionMongo();
-            conexion.editarSede(nombre, direccion, aforo, sedeId);
-            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
-            conexion.cerrarConexion();
-            request.setAttribute("sedes",sedes);
-            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+//            conexion.editarSede(nombre, direccion, aforo, sedeId);
+//            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
+//            conexion.cerrarConexion();
+//            request.setAttribute("sedes",sedes);
+//            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
         }else if(request.getParameter("_method").equals("DELETE")){
             int sedeId = Integer.parseInt(request.getParameter("sedeId"));
 
-            ConexionMongo conexion = new ConexionMongo();
-            conexion.eliminarSede(sedeId);
-            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
-            conexion.cerrarConexion();
-            request.setAttribute("sedes",sedes);
-            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
+            HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+//            conexion.eliminarSede(sedeId);
+//            ArrayList<Sedeeeee> sedes =conexion.obtenerSedes();
+//            conexion.cerrarConexion();
+//            request.setAttribute("sedes",sedes);
+//            request.getRequestDispatcher("administrador/sedes/verSedes.jsp").forward(request, response);
         }
         
     }

@@ -1,18 +1,38 @@
 package Class;
 
-public class Person {
+import Interfaces.IClone;
+
+public class Person implements IClone {
     
-    private String DNI;
+    private int personId;
     private String name;
     private String lastName;
-    private String birthdate;
+    private int age;
+    private String userType;
+    private String dni;
+    private String phone;
+    private String address;
 
-    public String getDNI() {
-        return DNI;
+    public Person() {
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public Person(int personId, String name, String lastName, int age, String userType, String dni, String phone, String address) {
+        this.personId = personId;
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.userType = userType;
+        this.dni = dni;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int userId) {
+        this.personId = userId;
     }
 
     public String getName() {
@@ -31,12 +51,50 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public int getAge() {
+        return age;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public IClone clone() {
+        IClone person = new Person(this.personId, this.name, this.lastName, this.age, this.userType, this.dni, this.phone, this.address);
+        return person;
     }
 
 }

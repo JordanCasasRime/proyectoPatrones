@@ -1,11 +1,12 @@
 
-import BD.ConexionMongo;
 import Class.Headquarters;
+import Class.Publication;
 import DAO.HeadquartersDAO;
 import DAO.PersonDAO;
+import DAO.PublicationDAO;
 import DataBase.MongoDB;
+import Interfaces.CRUD;
 import Interfaces.IConnection;
-import clases.Sedeeeee;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -45,12 +46,20 @@ public class Prueba {
 //                System.out.println(aux3.hashCode());
 //                
         
-        HeadquartersDAO conexion = new HeadquartersDAO();
-        ArrayList<Headquarters> sees = conexion.readAll();
-        sees.forEach((sede) -> {
-             System.out.println(sede.getName());
-        });
-        conexion.disconnection();
+//        HeadquartersDAO conexion = HeadquartersDAO.getInstance();
+////        HeadquartersDAO conexion2 = HeadquartersDAO.getInstance();
+////        HeadquartersDAO conexion3 = HeadquartersDAO.getInstance();
+////        
+////        System.out.println(conexion.hashCode());
+////        System.out.println(conexion2.hashCode());
+////        System.out.println(conexion3.hashCode());
+//
+//
+//        ArrayList<Headquarters> sees = conexion.readAll();
+//        sees.forEach((sede) -> {
+//             System.out.println(sede.getName());
+//        });
+//        conexion.disconnection();
 
 
 //            ConexionMongo conexion = new ConexionMongo();
@@ -59,6 +68,27 @@ public class Prueba {
 //            System.out.println("Pasando array");
 //            conexion.cerrarConexion();
 //            System.out.println("Cerrando");
+        
+//        Headquarters h = new Headquarters("nombre", "direccion", 20, 1);
+//        Headquarters h2 = (Headquarters) h.clone();
+//        
+//        if (h2 != null)
+//            System.out.println("se clono");
+//        System.out.println(h2 == h);
+
+        System.out.println("Hola");
+        CRUD h =  HeadquartersDAO.getInstance();
+        
+        System.out.println("Intenciando");
+        
+        ArrayList<Headquarters> sees = h.readAll();
+        sees.forEach((sede) -> {
+             System.out.println(sede.getName());
+             System.out.println(sede.getAddress());
+             System.out.println(sede.getCapacity());
+             System.out.println(sede.getHeadquartersId());
+        });
+
     }
 
 }

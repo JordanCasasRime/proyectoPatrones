@@ -39,11 +39,6 @@ public class MongoDB implements IConnection {
     public void setDatabase(DB database) {
         this.database = database;
     }
-    
-    @Override
-    public void connection() {
-        //instance.startSession();
-    }
 
     @Override
     public void disconnection() {

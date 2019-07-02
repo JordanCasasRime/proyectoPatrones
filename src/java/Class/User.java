@@ -1,26 +1,20 @@
 package Class;
 
-public class User {
+import Interfaces.IClone;
 
-    private Person datoPersonales;
-    private String phone;
+public class User implements IClone  {
+
     private String email;
     private String password;
+    private int personId;
 
-    public Person getDatoPersonales() {
-        return datoPersonales;
+    public User() {
     }
 
-    public void setDatoPersonales(Person datoPersonales) {
-        this.datoPersonales = datoPersonales;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public User(String email, String password, int personId) {
+        this.email = email;
+        this.password = password;
+        this.personId = personId;
     }
 
     public String getEmail() {
@@ -38,5 +32,19 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int userId) {
+        this.personId = userId;
+    }
+
+    @Override
+    public IClone clone() {
+        IClone headquarters = new User(this.email, this.password, this.personId);
+        return headquarters;
+    }
+
 }
